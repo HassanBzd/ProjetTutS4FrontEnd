@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
+  error = 'toto';
   constructor() { }
 
   ngOnInit(): void {
+  }
+  submit(): void{
+
   }
 
 }
