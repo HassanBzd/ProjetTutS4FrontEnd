@@ -6,11 +6,9 @@ import {MatCardModule} from '@angular/material/card';
 
 
 import { AuthRoutingModule } from './auth-routing.module';
-import {LoginComponent} from './login/login.component';
 
 @NgModule({
   declarations: [
-    LoginComponent
   ],
   imports: [
     CommonModule,
