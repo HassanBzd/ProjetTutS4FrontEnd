@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from './shared/service/auth.service';
+import {MessageService} from './shared/service/message.service';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +10,18 @@ import {AuthService} from './shared/service/auth.service';
 export class AppComponent implements OnInit {
   public title = 'ProjetTutS4FrontEnd';
 
-  public isLoggedIn = false;
-
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private messageService: MessageService
+  ) { }
 
   ngOnInit(): void {
   }
 
   login(): void {
     this.authService.login();
+  }
+  send(): void {
+    this.messageService.send('');
   }
 }
