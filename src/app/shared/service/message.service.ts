@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
+import {Message} from '../model/message';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +13,10 @@ export class MessageService {
   constructor(private httpClient: HttpClient) {
   }
 
-  send(message: string): void {
-    const testMessge = {
-      senderId: '1',
-      receiverId: '2',
-      message: 'Premier message trop bien'
-    };
-    this.httpClient.post(this.messageURL + 'send', testMessge).subscribe();
+  send(message: Message): Observable<object> {
+    return this.httpClient.post(this.messageURL + 'send', message);
+  }
+  getMessageWithUser(userId: string): Observable<Message[]> {
+    return this.httpClient.get<Message[]>(this.messageURL + 'chatWithUser/' + userId);
   }
 }

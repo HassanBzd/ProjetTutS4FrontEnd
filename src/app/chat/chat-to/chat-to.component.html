@@ -1,0 +1,11 @@
+<mat-nav-list>
+  <mat-list-item *ngFor="let message of chatMessages">
+    {{ message.message }}
+  </mat-list-item>
+</mat-nav-list>
+<mat-form-field>
+  <mat-label>Message</mat-label>
+  <textarea matInput [(ngModel)]='messageToSend'>
+  </textarea>
+</mat-form-field>
+<button (click)="send()">Envoyer</button>
