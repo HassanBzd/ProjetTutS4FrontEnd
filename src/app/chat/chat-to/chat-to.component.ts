@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {MessageService} from '../../shared/service/message.service';
 import {Message} from '../../shared/model/message';
 import {ActivatedRoute} from '@angular/router';
-import {UserService} from '../../shared/service/user.service';
 import {AuthService} from '@auth0/auth0-angular';
 
 @Component({
@@ -19,8 +18,7 @@ export class ChatToComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private messageService: MessageService,
-    private authService: AuthService,
-    private userService: UserService
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
