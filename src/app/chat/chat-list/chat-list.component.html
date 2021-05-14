@@ -1,0 +1,9 @@
+<nav>
+  <ul>
+    <li *ngFor="let user of users">
+      <a routerLink="/chat/chatTo/{{user.id}}">
+        Chatter avec : {{user.name}}
+      </a>
+    </li>
+  </ul>
+</nav>

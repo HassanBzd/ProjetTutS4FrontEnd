@@ -1,27 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from './shared/service/auth.service';
-import {MessageService} from './shared/service/message.service';
+import { Component } from '@angular/core';
+import {AuthService} from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  public title = 'ProjetTutS4FrontEnd';
-
+export class AppComponent {
   constructor(
-    private authService: AuthService,
-    private messageService: MessageService
-  ) { }
-
-  ngOnInit(): void {
+    private authService: AuthService
+  ) {
   }
 
   login(): void {
-    this.authService.login();
-  }
-  send(): void {
-    this.messageService.send('');
+    this.authService.loginWithRedirect();
   }
 }

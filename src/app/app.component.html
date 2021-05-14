@@ -1,14 +1,8 @@
 <nav>
   <ul>
     <li><a routerLinkActive="selected" routerLink="/">Home</a></li>
-    <li><a routerLinkActive="selected" routerLink="/login">bite</a></li>
+    <li><a routerLinkActive="selected" routerLink="/chat">Chat</a></li>
+    <li><a (click)="login()">Connexion</a></li>
   </ul>
 </nav>
-<div class="container" >
-  <button class="btn btn-primary" (click)="login()">
-    Login
-  </button>
-  <button (click)="send()">
-    Send message !
-  </button>
-</div>
+<router-outlet></router-outlet>
