@@ -10,13 +10,20 @@ import {Observable} from 'rxjs';
 export class MessageService {
   private messageURL = environment.baseURL + 'message/';
 
-  constructor(private httpClient: HttpClient) {
-  }
+  currentRefreshCallback: () => void = () => {};
+
+  constructor(
+    private httpClient: HttpClient
+  ) { }
 
   send(message: Message): Observable<object> {
     return this.httpClient.post(this.messageURL + 'send', message);
   }
   getMessageWithUser(userId: string): Observable<Message[]> {
     return this.httpClient.get<Message[]>(this.messageURL + 'chatWithUser/' + userId);
+  }
+  // Update messages with a certain userId
+  updateWithUserMessage(): void {
+    this.currentRefreshCallback();
   }
 }
