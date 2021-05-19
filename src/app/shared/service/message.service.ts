@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Message} from '../model/message';
 import {Observable} from 'rxjs';
+import {ChatToComponent} from '../../chat/chat-to/chat-to.component';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import {Observable} from 'rxjs';
 export class MessageService {
   private messageURL = environment.baseURL + 'message/';
 
-  currentRefreshCallback: () => void = () => {};
+  currentComponent: ChatToComponent | undefined;
 
   constructor(
     private httpClient: HttpClient
@@ -22,8 +23,8 @@ export class MessageService {
   getMessageWithUser(userId: string): Observable<Message[]> {
     return this.httpClient.get<Message[]>(this.messageURL + 'chatWithUser/' + userId);
   }
-  // Update messages with a certain userId
+  // Update messages
   updateWithUserMessage(): void {
-    this.currentRefreshCallback();
+    this.currentComponent?.refreshMessages();
   }
 }

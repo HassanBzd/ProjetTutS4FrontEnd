@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MessageService} from '../../shared/service/message.service';
 import {Message} from '../../shared/model/message';
 import {ActivatedRoute} from '@angular/router';
-import {AuthService} from '@auth0/auth0-angular';
-import {UserService} from "../../shared/service/user.service";
+import {UserService} from '../../shared/service/user.service';
 
 @Component({
   selector: 'app-chat-to',
@@ -34,7 +33,7 @@ export class ChatToComponent implements OnInit {
 
     this.refreshMessages();
 
-    this.messageService.currentRefreshCallback = this.refreshMessages;
+    this.messageService.currentComponent = this;
   }
 
   refreshMessages(): void {
