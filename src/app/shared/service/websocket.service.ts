@@ -24,7 +24,8 @@ export class WebsocketService {
         this.stompClient = Stomp.over(ws);
         this.stompClient.connect({ login: this.userService.getCurrentUserId() }, () => {
           // Update des messages
-          this.stompClient?.subscribe('/updateMessages', (message: Stomp.Message) => {
+          this.stompClient?.subscribe('/user/updateMessages', (message: Stomp.Message) => {
+            console.log('ca marche trop bi1');
             this.messageService.updateWithUserMessage();
           });
         }, error);
