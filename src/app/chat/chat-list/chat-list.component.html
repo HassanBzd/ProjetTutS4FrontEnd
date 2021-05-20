@@ -1,9 +1,19 @@
-<nav>
-  <ul>
-    <li *ngFor="let user of users">
+<div class="title">
+  <h3>Lancer une conversation avec :</h3>
+</div>
+<ng-container >
+  <ul *ngFor="let user of users">
+    
       <a routerLink="/chat/chatTo/{{user.id}}">
-        Chatter avec : {{user.name}}
+        <div class="userItem">
+          <span class="status" [ngClass]=(user.status)>
+          </span>
+          <span class="userName">
+            {{user.name}}
+          </span>
+        </div>
       </a>
-    </li>
+    
   </ul>
-</nav>
+
+</ng-container>
