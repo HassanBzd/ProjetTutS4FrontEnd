@@ -1,10 +1,11 @@
 <div class="title">
   <h3>Lancer une conversation avec :</h3>
 </div>
+
 <ng-container >
   <ul *ngFor="let user of users">
-    
-      <a routerLink="/chat/chatTo/{{user.id}}">
+    <li>
+      <a routerLink="/chat/chatTo/{{getUserId(user)}}">
         <div class="userItem">
           <span class="status" [ngClass]=(user.status)>
           </span>
@@ -13,7 +14,6 @@
           </span>
         </div>
       </a>
-    
+    </li>
   </ul>
-
 </ng-container>
