@@ -23,4 +23,7 @@ export class UserService {
   fetchUser(): Observable<User | null | undefined> {
     return this.authService.user$.pipe(map((user: User | null | undefined) => this.currentUser = user));
   }
+  getUserList(): Observable<User[] | null | undefined> {
+    //return
+  }
 }
