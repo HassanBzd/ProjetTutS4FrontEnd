@@ -4,12 +4,12 @@ import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
-    path:'',component:HomeComponent
+    path: '', component: HomeComponent
   },
-  { 
+  {
     path: 'chat', loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule)
   },
- 
+
 ];
 
 @NgModule({

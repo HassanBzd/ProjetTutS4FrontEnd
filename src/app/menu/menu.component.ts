@@ -19,9 +19,9 @@ export class MenuComponent implements OnInit{
     );
 
   constructor(private breakpointObserver: BreakpointObserver,
-    private authService: AuthService,
-    private userService: UserService,
-    private websocketService: WebsocketService) {}
+              private authService: AuthService,
+              private userService: UserService,
+              private websocketService: WebsocketService) {}
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated$) {
@@ -34,7 +34,7 @@ export class MenuComponent implements OnInit{
   login(): void {
     this.authService.loginWithRedirect();
   }
-  logout():void{
+  logout(): void{
     this.authService.logout();
   }
 }

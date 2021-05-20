@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from '../../shared/model/user';
+import {UserService} from '../../shared/service/user.service';
+import {User} from '@auth0/auth0-spa-js';
 
 @Component({
   selector: 'app-chat-list',
@@ -8,14 +9,18 @@ import {User} from '../../shared/model/user';
 })
 export class ChatListComponent implements OnInit {
 
-  users: User[] = [
-    {id: '117079709829071830908', name: 'thomas', status:'busy'},
-    {id: '111585999933138857542', name: 'badr', status:'online'}
-  ];
+  users: User[] | null | undefined = [];
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.getUserList().subscribe(users => {
+      this.users = users;
+      console.log(this.users);
+    });
+  }
+  getUserId(user: User): string {
+    return this.userService.parseUserId(user);
   }
 
 }
