@@ -9,8 +9,8 @@ import {User} from '../../shared/model/user';
 export class ChatListComponent implements OnInit {
 
   users: User[] = [
-    {id: 6, name: 'thomas',status:'busy'},
-    {id: 58, name: 'badr',status:'online'}
+    {id: '117079709829071830908', name: 'thomas', status:'busy'},
+    {id: '111585999933138857542', name: 'badr', status:'online'}
   ];
 
   constructor() { }
