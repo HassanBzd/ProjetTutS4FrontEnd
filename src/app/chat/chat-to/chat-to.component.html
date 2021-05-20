@@ -3,9 +3,7 @@
     {{ message.message }}
   </mat-list-item>
 </mat-nav-list>
-<mat-form-field>
-  <mat-label>Message</mat-label>
-  <textarea matInput [(ngModel)]='messageToSend'>
-  </textarea>
-</mat-form-field>
-<button (click)="send()">Envoyer</button>
+
+<input class="chatInput"  [(ngModel)]='messageToSend'/>
+
+<button class="chatButton" (click)="send()">Envoyer</button>
