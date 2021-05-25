@@ -1,9 +1,24 @@
-<mat-nav-list>
-  <mat-list-item *ngFor="let message of chatMessages">
-    {{ message.message }}
-  </mat-list-item>
-</mat-nav-list>
 
-<input class="chatInput"  [(ngModel)]='messageToSend'/>
-
-<button class="chatButton" (click)="send()">Envoyer</button>
+<div class="container">
+  <div class="chat">  
+    <div class="chat-header">
+    </div>
+    <div class="chat-messages">
+      <mat-nav-list class="message">
+        <mat-list-item *ngFor="let message of chatMessages">
+           {{ message.message }}
+        <span class="timestamp" >
+          {{ timeStamp | date:'medium' }}
+        </span> 
+      </mat-list-item>
+    </mat-nav-list>
+  </div>
+  <div class="chatFormWrapper">
+    <input class="chatInput"  placeholder="Saisissez un message"  [(ngModel)]='messageToSend'/>
+    <button class="emoji" (click) ="toggleEmojiPicker()"> 😀</button><br>
+    <emoji-mart class="emoji-mart" *ngIf="showEmojiPicker" (emojiSelect)="addEmoji($event)" title="Pick your emoji…">
+    </emoji-mart>
+    <button class="chatButton" (click)="send()">Envoyer</button>
+  </div>
+  </div>
+</div>

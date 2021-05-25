@@ -10,6 +10,12 @@
     min-width: 50px;
     margin-left: 10%;
 }
+.container {
+    height: 100vh;
+    background: #eee;
+    color: #dedede;
+    padding: 20px;
+  }
 
 .chatButton:hover{
     background-color: #444;
@@ -22,11 +28,37 @@
     color: #000;
     transition: 0.1s ease-out;
     padding-left: 80px;
-    margin-left: 2%;
 }
-
+.chat {
+    background: #2e2e2e;
+    border: 1px solid #2e2e2e;
+    border-radius: 10px 10px 0px 0px;
+  }
+  .chat-header {
+    padding: 10px;
+  }
+  .chat-messages {
+    border: 1px solid #2e2e2e;
+    background: #8e8e8e;
+    height: 80vh;
+    padding: 10px;
+  }
+  .message{
+    background: #ECFAFF;
+  }
 .chatInput:focus{
     background-color: #E4F1FE;
     color: #222;
     transition: 0.2s ease-in;
+}
+.chatFormWrapper {
+    display: flex;
+    height: 50px;
+    background-color: #eee;
+    z-index: 3;
+}
+.emoji{
+    
+    margin-left: 1%;
+    padding-left: 10px;
 }

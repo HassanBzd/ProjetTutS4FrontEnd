@@ -1,5 +1,6 @@
-export interface Message {
-  message: string;
-  receiverId: string;
-  senderId: string;
+export class Message {
+  message?: string;
+  receiverId?: string;
+  senderId?: string;
+  timeSent?: Date = new Date();
 }

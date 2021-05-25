@@ -3,7 +3,6 @@ import {MessageService} from '../../shared/service/message.service';
 import {Message} from '../../shared/model/message';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../../shared/service/user.service';
-
 @Component({
   selector: 'app-chat-to',
   templateUrl: './chat-to.component.html',
@@ -14,12 +13,18 @@ export class ChatToComponent implements OnInit {
   chatMessages: Message[] = [];
   receiverId = '';
   senderId = '';
-
+  date!: Date;
+  timeStamp: Date = new Date();
+  showEmojiPicker = false;
   constructor(
     private route: ActivatedRoute,
     private messageService: MessageService,
     private userService: UserService
-  ) { }
+  ) {
+    setInterval(() => {
+      this.date = new Date()
+    }, 1000)
+   }
 
   ngOnInit(): void {
     // Verify that id are set
@@ -30,10 +35,11 @@ export class ChatToComponent implements OnInit {
     }
     this.receiverId = tempReceiver;
     this.senderId = this.userService.getCurrentUserId();
-
     this.refreshMessages();
 
     this.messageService.currentComponent = this;
+    
+    this.timeStamp = this.date;
   }
 
   refreshMessages(): void {
@@ -50,5 +56,22 @@ export class ChatToComponent implements OnInit {
       senderId: this.senderId
     };
     this.messageService.send(message).subscribe();
+    this.messageToSend='';
   }
+  toggleEmojiPicker() {
+    console.log(this.showEmojiPicker);
+        this.showEmojiPicker = !this.showEmojiPicker;
+  }
+
+  addEmoji(event :any) {
+    console.log(this.messageToSend)
+    const { messageToSend } = this;
+    console.log(messageToSend);
+    console.log(`${event.emoji.native}`)
+    const text = `${messageToSend}${event.emoji.native}`;
+
+    this.messageToSend = text;
+    // this.showEmojiPicker = false;
+  }
+  
 }
