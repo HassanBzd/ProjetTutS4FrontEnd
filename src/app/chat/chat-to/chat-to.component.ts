@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MessageService} from '../../shared/service/message.service';
 import {Message} from '../../shared/model/message';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../../shared/service/user.service';
+
 @Component({
   selector: 'app-chat-to',
   templateUrl: './chat-to.component.html',
@@ -22,8 +23,8 @@ export class ChatToComponent implements OnInit {
     private userService: UserService
   ) {
     setInterval(() => {
-      this.date = new Date()
-    }, 1000)
+      this.date = new Date();
+    }, 1000);
    }
 
   ngOnInit(): void {
@@ -38,13 +39,20 @@ export class ChatToComponent implements OnInit {
     this.refreshMessages();
 
     this.messageService.currentComponent = this;
-    
+
     this.timeStamp = this.date;
   }
 
   refreshMessages(): void {
     this.messageService.getMessageWithUser(this.receiverId).subscribe(
-      messages => {this.chatMessages = messages; console.log(messages); }
+      messages => {
+        console.log(messages);
+        this.chatMessages = messages;
+        this.chatMessages.forEach(message => message.datetimeSent = new Date(message.datetimeSent));
+        this.chatMessages.sort((a: Message, b: Message) => {
+          return a.datetimeSent.getTime() - b.datetimeSent.getTime();
+        });
+      }
     );
   }
 
@@ -53,25 +61,24 @@ export class ChatToComponent implements OnInit {
     const message: Message = {
       message: this.messageToSend,
       receiverId: this.receiverId,
-      senderId: this.senderId
+      senderId: this.senderId,
+      datetimeSent: new Date()
     };
     this.messageService.send(message).subscribe();
-    this.messageToSend='';
+    this.messageToSend = '';
   }
-  toggleEmojiPicker() {
+  toggleEmojiPicker(): void {
     console.log(this.showEmojiPicker);
-        this.showEmojiPicker = !this.showEmojiPicker;
+    this.showEmojiPicker = !this.showEmojiPicker;
   }
 
-  addEmoji(event :any) {
-    console.log(this.messageToSend)
+  addEmoji(event: any): void {
+    console.log(this.messageToSend);
     const { messageToSend } = this;
     console.log(messageToSend);
-    console.log(`${event.emoji.native}`)
-    const text = `${messageToSend}${event.emoji.native}`;
-
-    this.messageToSend = text;
+    console.log(`${event.emoji.native}`);
+    this.messageToSend = `${messageToSend}${event.emoji.native}`;
     // this.showEmojiPicker = false;
   }
-  
+
 }
