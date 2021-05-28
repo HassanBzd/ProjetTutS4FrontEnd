@@ -10,8 +10,10 @@ import {UserService} from '../../shared/service/user.service';
   styleUrls: ['./chat-to.component.scss']
 })
 export class ChatToComponent implements OnInit {
+  userId = this.userService.getCurrentUserId();
   messageToSend = '';
   chatMessages: Message[] = [];
+  name='name of receiver';
   receiverId = '';
   senderId = '';
   date!: Date;
