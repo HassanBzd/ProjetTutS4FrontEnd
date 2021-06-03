@@ -21,7 +21,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { HomeComponent } from './home/home.component';
-
+import { ChatToModule } from './chat/chat-to/chat-to.module';
+import { ChatListModule } from './chat/chat-list/chat-list.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +55,9 @@ import { HomeComponent } from './home/home.component';
     LayoutModule,
     MatButtonModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    ChatToModule,
+    ChatListModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true }
