@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from '../../shared/service/message.service';
 import {Message} from '../../shared/model/message';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../shared/service/user.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class ChatToComponent implements OnInit {
   userId = this.userService.getCurrentUserId();
   messageToSend = '';
   chatMessages: Message[] = [];
-  name='name of receiver';
+  name = '';
   receiverId = '';
   senderId = '';
   date!: Date;
@@ -22,11 +22,15 @@ export class ChatToComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private messageService: MessageService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
     setInterval(() => {
       this.date = new Date();
     }, 1000);
+    this.router.routeReuseStrategy.shouldReuseRoute = () => {
+      return false;
+    };
    }
 
   ngOnInit(): void {
@@ -36,6 +40,12 @@ export class ChatToComponent implements OnInit {
       console.log('TODO: erreur', tempReceiver);
       return;
     }
+    this.userService.getUserList().subscribe(
+      users => users?.forEach((user) => {
+        if (this.receiverId === this.userService.parseUserId(user)) {
+          this.name = user.name ?? '';
+        }
+      }));
     this.receiverId = tempReceiver;
     this.senderId = this.userService.getCurrentUserId();
     this.refreshMessages();
@@ -45,7 +55,7 @@ export class ChatToComponent implements OnInit {
     this.timeStamp = this.date;
   }
 
-  refreshMessages(): void {
+refreshMessages(): void {
     this.messageService.getMessageWithUser(this.receiverId).subscribe(
       messages => {
         console.log(messages);
@@ -58,7 +68,7 @@ export class ChatToComponent implements OnInit {
     );
   }
 
-  send(): void {
+send(): void {
     // Send message
     const message: Message = {
       message: this.messageToSend,
@@ -69,12 +79,12 @@ export class ChatToComponent implements OnInit {
     this.messageService.send(message).subscribe();
     this.messageToSend = '';
   }
-  toggleEmojiPicker(): void {
+toggleEmojiPicker(): void {
     console.log(this.showEmojiPicker);
     this.showEmojiPicker = !this.showEmojiPicker;
   }
 
-  addEmoji(event: any): void {
+addEmoji(event: any): void {
     console.log(this.messageToSend);
     const { messageToSend } = this;
     console.log(messageToSend);

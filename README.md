@@ -15,9 +15,7 @@ On fait du gitflow, c'est-à-dire :
   
 - Remplacer les configs avec votre config
   
-- Créer 2 tables : une pour le dév et une pour les tests
-  
-- Mettre à jours vos configs pour quelles utilises ces tables
+- Mettre à jours vos configs pour quelles utilisent ces tables
 
 ## Déploiement :
 

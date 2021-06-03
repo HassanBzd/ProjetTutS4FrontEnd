@@ -1,6 +1,6 @@
-
 <ng-container >
-  <ul *ngFor="let user of users">
+  <ul>
+    <li *ngFor="let user of users">
       <a routerLink="/chat/chatTo/{{getUserId(user)}}">
         <div class="userList">
           <div class="userItem">
@@ -12,5 +12,6 @@
           </div>
         </div>
       </a>
+    </li>
   </ul>
 </ng-container>
