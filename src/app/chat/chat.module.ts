@@ -10,6 +10,9 @@ import {TextFieldModule} from '@angular/cdk/text-field';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
 import {MatListModule} from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 
 @NgModule({
@@ -20,12 +23,14 @@ import {MatListModule} from '@angular/material/list';
   ],
   imports: [
     CommonModule,
+    PickerModule,
     ChatRoutingModule,
     MatFormFieldModule,
     TextFieldModule,
     MatInputModule,
     FormsModule,
-    MatListModule
+    MatListModule,
+    MatIconModule,
   ]
 })
 export class ChatModule { }

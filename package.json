@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~11.2.9",
     "@angular/router": "~11.2.9",
     "@auth0/auth0-angular": "^1.5.0",
+    "@ctrl/ngx-emoji-mart": "^5.1.1",
     "net": "^1.0.2",
     "ng2-cookies": "^1.0.12",
     "rxjs": "~6.6.0",

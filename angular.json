@@ -21,7 +21,8 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "lodash"
+              "sockjs-client",
+              "stompjs"
             ],
             "outputPath": "dist/ProjetTutS4FrontEnd",
             "index": "src/index.html",
