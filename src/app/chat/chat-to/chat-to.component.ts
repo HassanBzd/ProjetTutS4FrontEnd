@@ -29,40 +29,37 @@ export class ChatToComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    // Find receiver
-    this.userService.getUserList().subscribe(
-      users => users?.forEach((user) => {
-        if (this.chatService.currentUserId === this.userService.parseUserId(user)) {
-          this.receiver = user;
-        }
-      }));
-
-    this.messageToSend.senderId = this.userService.getCurrentUserId();
-    this.messageToSend.receiverId = this.chatService.currentUserId;
-    this.refreshMessages();
-
     this.messageService.currentComponent = this;
     this.chatService.currentComponent = this;
-    console.log('test');
   }
 
 refreshMessages(): void {
-    this.messageService.getMessageWithUser(this.userService.parseUserId(this.receiver)).subscribe(
-      messages => {
-        console.log(messages);
-        this.chatMessages = messages;
-        this.chatMessages.forEach(message => message.datetimeSent = new Date(message.datetimeSent));
-        this.chatMessages.sort((a: Message, b: Message) => {
-          return a.datetimeSent.getTime() - b.datetimeSent.getTime();
-        });
+  // Find receiver
+  this.userService.getUserList().subscribe(
+    users => users?.forEach((user) => {
+      if (this.chatService.currentUserId === this.userService.parseUserId(user)) {
+        this.receiver = user;
+        this.messageToSend.senderId = this.userService.getCurrentUserId();
+        this.messageToSend.receiverId = this.chatService.currentUserId;
+
+        // Find messages
+        this.messageService.getMessageWithUser(this.userService.parseUserId(this.receiver)).subscribe(
+          messages => {
+            console.log(messages);
+            this.chatMessages = messages;
+            this.chatMessages.forEach(message => message.datetimeSent = new Date(message.datetimeSent));
+            this.chatMessages.sort((a: Message, b: Message) => {
+              return a.datetimeSent.getTime() - b.datetimeSent.getTime();
+            });
+          }
+        );
       }
-    );
+    }));
   }
 
 send(): void {
     this.messageToSend.datetimeSent = new Date();
-    this.messageService.send(this.messageToSend).subscribe();
-    this.messageToSend.message = '';
+    this.messageService.send(this.messageToSend).subscribe(() => this.messageToSend.message = '');
   }
 
 toggleEmojiPicker(): void {

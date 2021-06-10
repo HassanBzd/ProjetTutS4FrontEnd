@@ -11,7 +11,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 export class UserService {
 
   private userApiURL = 'https://dev-qzfc4ny.eu.auth0.com/api/v2';
-  private currentUser: User | null | undefined;
+  currentUser: User | null | undefined;
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -27,7 +27,7 @@ export class UserService {
       console.log('current User null'); // TODO
       return '';
     }
-    return this.currentUser?.sub?.split('|')[1] ?? '';
+    return this.parseUserId(this.currentUser);
   }
   fetchUser(): Observable<User | null | undefined> {
     return this.authService.user$.pipe(map((user: User | null | undefined) => this.currentUser = user));
@@ -37,6 +37,6 @@ export class UserService {
   }
 
   parseUserId(user: User): string {
-    return user.user_id.split('|')[1] ?? '';
+    return user.sub?.split('|')[1] ?? user.user_id?.split('|')[1] ?? '';
   }
 }

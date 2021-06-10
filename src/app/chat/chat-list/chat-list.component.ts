@@ -17,11 +17,14 @@ export class ChatListComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getUserList().subscribe(users => {
       this.users = users.filter(user => this.userService.parseUserId(user) !== this.userService.getCurrentUserId());
-      console.log(this.users);
     });
   }
 
   changeCurrentUser(user: User): void {
     this.chatService.setCurrentUserId(this.userService.parseUserId(user));
+  }
+
+  isSelectedUser(user: User): boolean {
+    return this.chatService.currentUserId === this.userService.parseUserId(user);
   }
 }

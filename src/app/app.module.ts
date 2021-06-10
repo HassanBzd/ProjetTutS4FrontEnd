@@ -15,17 +15,18 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import {environment} from '../environments/environment';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { MenuComponent } from './shared/menu/menu.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { HomeComponent } from './home/home.component';
+import {SharedModule} from './shared/shared.module';
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent,
     HomeComponent
   ],
   imports: [
@@ -55,6 +56,9 @@ import { HomeComponent } from './home/home.component';
     MatButtonModule,
     MatIconModule,
     MatListModule,
+    SharedModule,
+    FlexLayoutModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true }

@@ -28,6 +28,8 @@ export class WebsocketService {
             console.log('ca marche trop bi1');
             this.messageService.updateWithUserMessage();
           });
+
+          resolve();
         }, error);
       } else {
         resolve();
