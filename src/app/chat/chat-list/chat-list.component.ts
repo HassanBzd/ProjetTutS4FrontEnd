@@ -27,4 +27,8 @@ export class ChatListComponent implements OnInit {
   isSelectedUser(user: User): boolean {
     return this.chatService.currentUserId === this.userService.parseUserId(user);
   }
+  getUserStatus(user: User): string {
+    console.log(this.userService.getUserStatus(user));
+    return this.userService.getUserStatus(user);
+  }
 }

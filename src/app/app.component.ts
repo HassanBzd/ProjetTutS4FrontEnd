@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
         console.log('Login');
         this.authService.loginWithRedirect();
       }
-    })
+    });
   }
 
 

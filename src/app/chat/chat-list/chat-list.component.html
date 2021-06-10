@@ -1,11 +1,10 @@
-<ng-container >
-  <mat-list>
-    <mat-list-item *ngFor="let user of users" (click)="changeCurrentUser(user)" [ngClass]="{'selected': isSelectedUser(user)}">
-        <span class="userName">
-          {{user.name}}
-        </span>
-        <span class="status" [ngClass]=(user.status)>
-        </span>
-    </mat-list-item>
-  </mat-list>
-</ng-container>
+<mat-list id="list">
+  <mat-list-item *ngFor="let user of users" (click)="changeCurrentUser(user)" [ngClass]="{'selected': isSelectedUser(user)}">
+      <span class="status" [ngClass]=getUserStatus(user)>
+      </span>
+      <span class="userName">
+        {{user.name}}
+      </span>
+  </mat-list-item>
+</mat-list>
+

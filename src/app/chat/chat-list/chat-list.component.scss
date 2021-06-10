@@ -1,4 +1,7 @@
-.online{
+#list {
+  overflow: hidden;
+}
+.connected{
     background-color: #0FA;
 }
 
@@ -6,8 +9,8 @@
     background-color: #FB0;
 }
 
-.offline{
-    background-color: #888;
+.disconnected {
+    background-color: red;
 }
 
 .status{
@@ -16,7 +19,7 @@
     min-width: 10px;
     min-height: 10px;
     border-radius: 50%;
-    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .userName{
