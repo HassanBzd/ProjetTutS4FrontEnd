@@ -9,6 +9,9 @@ const routes: Routes = [
   {
     path: 'chat', loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule)
   },
+  {
+    path: 'ticket', loadChildren: () => import('./ticket/ticket.module').then(m => m.TicketModule)
+  },
 
 ];
 

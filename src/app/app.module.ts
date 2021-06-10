@@ -15,14 +15,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import {environment} from '../environments/environment';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { MenuComponent } from './menu/menu.component';
+import { MenuComponent } from './shared/menu/menu.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { HomeComponent } from './home/home.component';
-import { ChatToModule } from './chat/chat-to/chat-to.module';
-import { ChatListModule } from './chat/chat-list/chat-list.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,8 +55,6 @@ import { ChatListModule } from './chat/chat-list/chat-list.module';
     MatButtonModule,
     MatIconModule,
     MatListModule,
-    ChatToModule,
-    ChatListModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true }

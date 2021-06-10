@@ -1,0 +1,21 @@
+<h1>Liste de vos tickets</h1>
+<button mat-raised-button color="accent" routerLink="/ticket/new">Créer un nouveau ticket</button>
+<mat-tab-group>
+  <mat-tab label="Ouverts [{{openedTickets.length}}]">
+    <ng-template matTabContent>
+      <mat-list>
+        <mat-list-item *ngFor="let ticket of openedTickets" routerLink="/ticket/show/{{ticket.ticketId}}">
+          {{ ticket.title }}
+        </mat-list-item>
+      </mat-list>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Fermés [{{closedTickets.length}}]">
+    <ng-template matTabContent>
+      <mat-list-item *ngFor="let ticket of closedTickets" routerLink="/ticket/show/{{ticket.ticketId}}">
+        {{ ticket.title }}
+      </mat-list-item>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
+
