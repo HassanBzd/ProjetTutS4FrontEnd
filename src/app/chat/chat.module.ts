@@ -13,6 +13,7 @@ import {MatListModule} from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 
 @NgModule({
@@ -21,16 +22,17 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     ChatToComponent,
     ChatListComponent
   ],
-  imports: [
-    CommonModule,
-    PickerModule,
-    ChatRoutingModule,
-    MatFormFieldModule,
-    TextFieldModule,
-    MatInputModule,
-    FormsModule,
-    MatListModule,
-    MatIconModule,
-  ]
+    imports: [
+        CommonModule,
+        PickerModule,
+        ChatRoutingModule,
+        MatFormFieldModule,
+        TextFieldModule,
+        MatInputModule,
+        FormsModule,
+        MatListModule,
+        MatIconModule,
+        FlexLayoutModule,
+    ]
 })
 export class ChatModule { }
