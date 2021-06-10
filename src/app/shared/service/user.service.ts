@@ -32,7 +32,7 @@ export class UserService {
   fetchUser(): Observable<User | null | undefined> {
     return this.authService.user$.pipe(map((user: User | null | undefined) => this.currentUser = user));
   }
-  getUserList(): Observable<User[] | null | undefined> {
+  getUserList(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.userApiURL + '/users', this.httpOptions);
   }
 

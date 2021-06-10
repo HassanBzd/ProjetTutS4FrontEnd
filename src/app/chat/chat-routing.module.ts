@@ -1,19 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {ChatListComponent} from './chat-list/chat-list.component';
-import {ChatToComponent} from './chat-to/chat-to.component';
+import {ChatComponent} from './chat.component';
 
 const routes: Routes = [
   {
-    path: '', component: ChatListComponent
+    path: '', component: ChatComponent
   },
-  {
-    path: 'list', component: ChatListComponent
-  },
-  {
-    path: 'chatTo/:id', component: ChatToComponent
-  }
-
 ];
 
 @NgModule({

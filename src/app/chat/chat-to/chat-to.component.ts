@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from '../../shared/service/message.service';
 import {Message} from '../../shared/model/message';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {UserService} from '../../shared/service/user.service';
+import {ChatService} from '../../shared/service/chat.service';
+import {User} from '@auth0/auth0-spa-js';
 
 @Component({
   selector: 'app-chat-to',
@@ -11,52 +13,41 @@ import {UserService} from '../../shared/service/user.service';
 })
 export class ChatToComponent implements OnInit {
   userId = this.userService.getCurrentUserId();
-  messageToSend = '';
+
+  messageToSend: Message = {datetimeSent: new Date()};
   chatMessages: Message[] = [];
-  name = '';
-  receiverId = '';
-  senderId = '';
-  date!: Date;
-  timeStamp: Date = new Date();
+  receiver: User = {};
+
   showEmojiPicker = false;
+
   constructor(
-    private route: ActivatedRoute,
     private messageService: MessageService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private chatService: ChatService
   ) {
-    setInterval(() => {
-      this.date = new Date();
-    }, 1000);
-    this.router.routeReuseStrategy.shouldReuseRoute = () => {
-      return false;
-    };
    }
 
   ngOnInit(): void {
-    // Verify that id are set
-    const tempReceiver = this.route.snapshot.paramMap.get('id');
-    if (!tempReceiver) {
-      console.log('TODO: erreur', tempReceiver);
-      return;
-    }
+    // Find receiver
     this.userService.getUserList().subscribe(
       users => users?.forEach((user) => {
-        if (this.receiverId === this.userService.parseUserId(user)) {
-          this.name = user.name ?? '';
+        if (this.chatService.currentUserId === this.userService.parseUserId(user)) {
+          this.receiver = user;
         }
       }));
-    this.receiverId = tempReceiver;
-    this.senderId = this.userService.getCurrentUserId();
+
+    this.messageToSend.senderId = this.userService.getCurrentUserId();
+    this.messageToSend.receiverId = this.chatService.currentUserId;
     this.refreshMessages();
 
     this.messageService.currentComponent = this;
-
-    this.timeStamp = this.date;
+    this.chatService.currentComponent = this;
+    console.log('test');
   }
 
 refreshMessages(): void {
-    this.messageService.getMessageWithUser(this.receiverId).subscribe(
+    this.messageService.getMessageWithUser(this.userService.parseUserId(this.receiver)).subscribe(
       messages => {
         console.log(messages);
         this.chatMessages = messages;
@@ -69,16 +60,11 @@ refreshMessages(): void {
   }
 
 send(): void {
-    // Send message
-    const message: Message = {
-      message: this.messageToSend,
-      receiverId: this.receiverId,
-      senderId: this.senderId,
-      datetimeSent: new Date()
-    };
-    this.messageService.send(message).subscribe();
-    this.messageToSend = '';
+    this.messageToSend.datetimeSent = new Date();
+    this.messageService.send(this.messageToSend).subscribe();
+    this.messageToSend.message = '';
   }
+
 toggleEmojiPicker(): void {
     console.log(this.showEmojiPicker);
     this.showEmojiPicker = !this.showEmojiPicker;
@@ -89,7 +75,7 @@ addEmoji(event: any): void {
     const { messageToSend } = this;
     console.log(messageToSend);
     console.log(`${event.emoji.native}`);
-    this.messageToSend = `${messageToSend}${event.emoji.native}`;
+    this.messageToSend.message = `${messageToSend}${event.emoji.native}`;
     // this.showEmojiPicker = false;
   }
 

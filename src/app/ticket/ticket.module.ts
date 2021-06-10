@@ -9,7 +9,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
 import {MatTabsModule} from '@angular/material/tabs';
-import {MatListModule} from "@angular/material/list";
+import {MatListModule} from '@angular/material/list';
 import { TicketShowComponent } from './ticket-show/ticket-show.component';
 
 @NgModule({

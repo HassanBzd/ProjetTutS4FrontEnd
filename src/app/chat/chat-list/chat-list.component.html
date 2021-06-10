@@ -1,17 +1,11 @@
 <ng-container >
-  <ul>
-    <li *ngFor="let user of users">
-      <a routerLink="/chat/chatTo/{{getUserId(user)}}">
-        <div class="userList">
-          <div class="userItem">
-            <span class="status" [ngClass]=(user.status)>
-            </span>
-            <span class="userName">
-              {{user.name}}
-            </span>
-          </div>
-        </div>
-      </a>
-    </li>
-  </ul>
+  <mat-list>
+    <mat-list-item *ngFor="let user of users" (click)="changeCurrentUser(user)">
+        <span class="userName">
+          {{user.name}}
+        </span>
+        <span class="status" [ngClass]=(user.status)>
+        </span>
+    </mat-list-item>
+  </mat-list>
 </ng-container>
