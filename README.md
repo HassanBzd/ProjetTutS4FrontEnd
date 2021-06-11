@@ -10,30 +10,15 @@ On fait du gitflow, c'est-à-dire :
 
 - quand on a fini une feature on fait une merge request sur develop
 
-# ProjetTutS4FrontEnd
+## Init :
+- Copier le fichier application-prod.properties en application-dev.properties
+  
+- Remplacer les configs avec votre config
+  
+- Mettre à jours vos configs pour quelles utilisent ces tables
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.8.
+## Déploiement :
 
-## Development server
+- ng build --prod
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- copier le contenu de dist/ProjetTutS4FrontEnd dans main/ressources/public sur le serveur

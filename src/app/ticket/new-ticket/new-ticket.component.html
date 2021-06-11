@@ -1,0 +1,11 @@
+<form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+  <mat-form-field appearance="fill">
+    <mat-label>Titre</mat-label>
+    <input matInput [(ngModel)]="ticket.title" name="title">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Votre demande</mat-label>
+    <textarea matInput [(ngModel)]="ticket.demand" name="demand"></textarea>
+  </mat-form-field>
+  <button mat-raised-button color="accent" type="submit">Créer le ticket</button>
+</form>
