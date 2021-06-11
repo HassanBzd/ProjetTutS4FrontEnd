@@ -29,9 +29,12 @@ export class AppComponent implements OnInit {
             this.websocketService.connect()
               .then(
                 () => {
-                  // Ready to use app
-                  this.loaded = true;
-                  console.log('connected');
+                  // Fetch users status
+                  this.userService.getAllUserStatus().subscribe(_ => {
+                    // Ready to use app
+                    this.loaded = true;
+                    console.log('connected');
+                  });
                 }
               ).catch(
               (reason) => console.log(reason)

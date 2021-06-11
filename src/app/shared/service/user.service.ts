@@ -5,6 +5,7 @@ import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UpdateStatusDto} from '../model/updateStatusDto';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ import {UpdateStatusDto} from '../model/updateStatusDto';
 export class UserService {
 
   private userApiURL = 'https://dev-qzfc4ny.eu.auth0.com/api/v2';
+  private userStatusURL = environment.baseURL + 'user/';
   private currentUser: User | null | undefined;
   private userStatus: any = {};
 
@@ -52,5 +54,16 @@ export class UserService {
 
   getUserStatus(user: User): string {
     return this.userStatus[this.parseUserId(user)] ?? 'disconnected';
+  }
+
+  getAllUserStatus(): Observable<UpdateStatusDto[]> {
+    return this.httpClient.get<UpdateStatusDto[]>(this.userStatusURL + 'status').pipe(map(
+      (usersStatus: UpdateStatusDto[]) => {
+        usersStatus.forEach(
+          (userStatus: UpdateStatusDto) => this.updateStatus(userStatus)
+        );
+        return usersStatus;
+      }
+    ));
   }
 }
