@@ -1,23 +1,7 @@
-.userItem{
-    height: auto;
-    padding: 10px;
-    width: 90%;
-    margin-top: 10px;
-    align-items:flex-start;
-    background-color: #1b30ac;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    color: #A098A5;
-    border-radius: 8px;
-    transition: ease-in 0.2s;
+#list {
+  overflow: hidden;
 }
-
-.userItem:hover{
-    background-color: #453968;
-    color: #ddd;
-    transition: ease-in 0.1s;
-}
-
-.online{
+.connected{
     background-color: #0FA;
 }
 
@@ -25,8 +9,8 @@
     background-color: #FB0;
 }
 
-.offline{
-    background-color: #888;
+.disconnected {
+    background-color: red;
 }
 
 .status{
@@ -35,9 +19,13 @@
     min-width: 10px;
     min-height: 10px;
     border-radius: 50%;
-    margin: 10px 12px 0px 10px;
+    margin-right: 10px;
 }
 
 .userName{
     display: inline-block;
+}
+
+.selected {
+  background-color: #555555;
 }

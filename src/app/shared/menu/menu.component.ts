@@ -19,21 +19,11 @@ export class MenuComponent implements OnInit{
     );
 
   constructor(private breakpointObserver: BreakpointObserver,
-              private authService: AuthService,
-              private userService: UserService,
-              private websocketService: WebsocketService) {}
+              private authService: AuthService) {}
 
   ngOnInit(): void {
-    if (this.authService.isAuthenticated$) {
-      this.userService.fetchUser().subscribe(
-        _ => this.websocketService.connect().then(() => console.log('connected')).catch((reason) => console.log(reason))
-      );
-    }
   }
 
-  login(): void {
-    this.authService.loginWithRedirect();
-  }
   logout(): void{
     this.authService.logout();
   }

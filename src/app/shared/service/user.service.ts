@@ -4,6 +4,8 @@ import {User} from '@auth0/auth0-spa-js';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {UpdateStatusDto} from '../model/updateStatusDto';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 export class UserService {
 
   private userApiURL = 'https://dev-qzfc4ny.eu.auth0.com/api/v2';
+  private userStatusURL = environment.baseURL + 'user/';
   private currentUser: User | null | undefined;
+  private userStatus: any = {};
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -24,19 +28,42 @@ export class UserService {
 
   getCurrentUserId(): string {
     if (!this.currentUser) {
-      console.log('current User null'); // TODO
+      console.log('/!\\ Current user null'); // TODO
       return '';
     }
-    return this.currentUser?.sub?.split('|')[1] ?? '';
+    return this.parseUserId(this.currentUser);
   }
   fetchUser(): Observable<User | null | undefined> {
     return this.authService.user$.pipe(map((user: User | null | undefined) => this.currentUser = user));
   }
-  getUserList(): Observable<User[] | null | undefined> {
+  getUserList(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.userApiURL + '/users', this.httpOptions);
   }
 
   parseUserId(user: User): string {
-    return user.user_id.split('|')[1] ?? '';
+    return user.sub?.split('|')[1] ?? user.user_id?.split('|')[1] ?? '';
+  }
+  updateStatus(dto: UpdateStatusDto): void {
+    console.log(dto);
+    if (!dto.userId) {
+      return;
+    }
+    this.userStatus[dto.userId] = dto.status;
+    console.log(this.userStatus);
+  }
+
+  getUserStatus(user: User): string {
+    return this.userStatus[this.parseUserId(user)] ?? 'disconnected';
+  }
+
+  getAllUserStatus(): Observable<UpdateStatusDto[]> {
+    return this.httpClient.get<UpdateStatusDto[]>(this.userStatusURL + 'status').pipe(map(
+      (usersStatus: UpdateStatusDto[]) => {
+        usersStatus.forEach(
+          (userStatus: UpdateStatusDto) => this.updateStatus(userStatus)
+        );
+        return usersStatus;
+      }
+    ));
   }
 }
