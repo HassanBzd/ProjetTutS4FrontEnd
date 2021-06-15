@@ -1,0 +1,15 @@
+<div>
+  <span *ngFor="let user of selectedUsers">{{user.name}}; </span>
+</div>
+
+<mat-form-field appearance="fill">
+  <mat-label>Users</mat-label>
+  <mat-select [(value)]="selectedUser">
+    <mat-option *ngFor="let user of availableUsers" [value]="user">
+      {{user.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<button mat-raised-button color="accent" (click)="addSelectedUser()">Ajouter</button>
+
+<button mat-raised-button color="accent" (click)="create()">Créer</button>

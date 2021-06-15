@@ -26,6 +26,7 @@ export class WebsocketService {
         this.stompClient.connect({ login: this.userService.getCurrentUserId() }, () => {
           // Update des messages
           this.stompClient?.subscribe('/user/updateMessages', (message: Stomp.Message) => {
+            console.log('refresh messages in websocketService');
             this.messageService.updateWithUserMessage();
           });
           // Update status

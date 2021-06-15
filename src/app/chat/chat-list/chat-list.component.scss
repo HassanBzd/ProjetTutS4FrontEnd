@@ -1,11 +1,16 @@
 #list {
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  max-height: calc(100vh - 64px - 69px); // 64 px is toolbar, 69px is chat footer
 }
-.connected{
+#button__wrapper {
+  margin-top:10px;
+}
+.connected {
     background-color: #0FA;
 }
 
-.busy{
+.busy {
     background-color: #FB0;
 }
 
@@ -22,7 +27,7 @@
     margin-right: 10px;
 }
 
-.userName{
+.userName {
     display: inline-block;
 }
 

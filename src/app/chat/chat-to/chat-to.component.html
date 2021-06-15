@@ -1,17 +1,27 @@
 <section class="chat1">
   <div class="chat__body">
-      <div class="chat__content">
-        <div class="chat__header">
-          {{receiver.name}}
-        </div>
-          <mat-nav-list class="chat__messages">
-            <mat-list-item *ngFor="let message of chatMessages" [ngClass]="userId!==message.senderId ? 'sent' : 'received'">
-                {{ message.message}}
-            <span class="timestamp" >
-              {{ message.datetimeSent | date:'medium' }}
+    <div class="chat__content">
+      <div class="chat__header">
+        <span *ngFor="let user of group.fullUsers">{{user.name}}; </span>
+        <button mat-raised-button color="accent" (click)="addMember()">Ajouter membre</button>
+      </div>
+      <mat-nav-list class="chat__messages">
+        <mat-list-item *ngFor="let message of chatMessages" [ngClass]="userId === message.senderId ? 'sent' : 'received'">
+          <div fxLayout="column" class="message">
+            <div fxLayout>
+              <span *ngIf="userId !== message.senderId">
+                {{ getSenderName(message.senderId) }}
+              </span>
+              <span class="timestamp" >
+                {{ message.datetimeSent | date:'medium' }}
+              </span>
+            </div>
+            <span>
+              {{ message.message}}
             </span>
-          </mat-list-item>
-        </mat-nav-list>
+          </div>
+        </mat-list-item>
+      </mat-nav-list>
     </div>
   </div>
   <div class="chat__footer">

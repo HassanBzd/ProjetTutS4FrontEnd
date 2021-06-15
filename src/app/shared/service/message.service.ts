@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {Message} from '../model/message';
+import {GroupMessage} from '../model/groupMessage';
 import {Observable} from 'rxjs';
 import {ChatToComponent} from '../../chat/chat-to/chat-to.component';
 
@@ -17,14 +17,15 @@ export class MessageService {
     private httpClient: HttpClient
   ) { }
 
-  send(message: Message): Observable<object> {
+  send(message: GroupMessage): Observable<object> {
     return this.httpClient.post(this.messageURL + 'send', message);
   }
-  getMessageWithUser(userId: string): Observable<Message[]> {
-    return this.httpClient.get<Message[]>(this.messageURL + 'chatWithUser/' + userId);
+  getMessageInGroup(groupId: number): Observable<GroupMessage[]> {
+    return this.httpClient.get<GroupMessage[]>(this.messageURL + 'messagesInGroup/' + groupId);
   }
   // Update messages
   updateWithUserMessage(): void {
+    console.log('refresh messages in service', this.currentComponent);
     this.currentComponent?.refreshMessages();
   }
 }
