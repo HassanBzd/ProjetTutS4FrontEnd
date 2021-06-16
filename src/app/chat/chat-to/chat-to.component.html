@@ -1,25 +1,51 @@
 <section class="chat1">
   <div class="chat__body">
-      <div class="chat__content">
-        <div class="chat__header">
-          {{receiver.name}}
+    <div class="chat__content">
+      <div class="chat__header">
+        <div fxFlex id="fullusernameList">
+          <span *ngFor="let user of group.fullUsers" class="span__username">{{user.name}}
+            <button mat-icon-button class="deleteIcons" *ngIf="isOwner" (click)="deleteMember(user)"><mat-icon>delete</mat-icon></button>
+            ; </span>
         </div>
-          <mat-nav-list class="chat__messages">
-            <mat-list-item *ngFor="let message of chatMessages" [ngClass]="userId!==message.senderId ? 'sent' : 'received'">
-                {{ message.message}}
-            <span class="timestamp" >
-              {{ message.datetimeSent | date:'medium' }}
+        <!-- Partie pour le owner seulement -->
+        <div fxFlex="25%" *ngIf="isOwner" fxLayout fxLayoutAlign="space-evenly center">
+          <mat-form-field>
+            <mat-select [(value)]="selectedUser">
+              <mat-option *ngFor="let user of availableUsers" [value]="user">
+                {{user.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-raised-button color="accent" (click)="addMember()">Ajouter</button>
+        </div>
+        <!-- Fin partie owner -->
+      </div>
+      <mat-list class="chat__messages">
+        <mat-list-item *ngFor="let message of chatMessages" [ngClass]="userId === message.senderId ? 'sent' : 'received'">
+          <div fxLayout="column" class="message">
+            <div fxLayout>
+              <span *ngIf="userId !== message.senderId" class="username">
+                {{ getSenderName(message.senderId) }}
+              </span>
+              <span class="timestamp" >
+                {{ message.datetimeSent | date:'medium' }}
+              </span>
+            </div>
+            <span>
+              {{ message.message}}
             </span>
-          </mat-list-item>
-        </mat-nav-list>
+          </div>
+        </mat-list-item>
+        <mat-list-item>
+          <!-- User for space at the end-->
+        </mat-list-item>
+      </mat-list>
     </div>
   </div>
-  <div class="chat__footer">
-    <input class="chatInput"  placeholder="Saisissez un message"  [(ngModel)]='messageToSend.message'/>
-    <button class="emoji" (click) ="toggleEmojiPicker()"> 😀</button><br>
-    <emoji-mart class="emoji-mart"
-      style="position: absolute;  bottom: 20px; right: 30px;" *ngIf="showEmojiPicker" (emojiSelect)="addEmoji($event)" title="Pick your emoji…">
-    </emoji-mart>
-    <button class="chatButton" (click)="send()">Envoyer</button>
+  <div class="chat__footer" fxLayout>
+    <input class="chatInput"  placeholder="Saisissez un message"  [(ngModel)]='messageToSend.message' fxFlex="80%"/>
+    <button class="emoji" (click) ="toggleEmojiPicker()" fxFlex="52px">😀</button>
+    <emoji-mart class="emoji-mart" *ngIf="showEmojiPicker" (emojiSelect)="addEmoji($event)"></emoji-mart>
+    <button mat-raised-button color="accent" class="sendButton" (click)="send()" fxFlex>Envoyer</button>
   </div>
 </section>

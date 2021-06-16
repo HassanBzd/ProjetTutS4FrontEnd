@@ -1,10 +1,11 @@
 <mat-list id="list">
-  <mat-list-item *ngFor="let user of users" (click)="changeCurrentUser(user)" [ngClass]="{'selected': isSelectedUser(user)}">
-      <span class="status" [ngClass]=getUserStatus(user)>
-      </span>
-      <span class="userName">
-        {{user.name}}
-      </span>
+  <mat-list-item *ngFor="let group of groups" (click)="changeCurrentUser(group)" [ngClass]="{'selected': isSelectedGroup(group)}">
+    <span class="userName">
+      {{group.grpId}}
+    </span>
+    <mat-divider></mat-divider>
   </mat-list-item>
 </mat-list>
-
+<div fxLayout fxLayoutAlign="center" id="button__wrapper">
+  <button mat-raised-button color="accent" (click)="newChat()">Nouvelle conversation</button>
+</div>
