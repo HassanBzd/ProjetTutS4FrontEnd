@@ -1,6 +1,5 @@
 #list {
   overflow-x: hidden;
-  overflow-y: scroll;
   max-height: calc(100vh - 64px - 69px); // 64 px is toolbar, 69px is chat footer
 }
 #button__wrapper {

@@ -1,3 +1,3 @@
-export class ChatUser {
-  user?: string;
+export interface ChatUser {
+  user: string;
 }

@@ -16,9 +16,12 @@ export class ChatToComponent implements OnInit {
   group: Group = {users: [], fullUsers: []};
   userId = this.userService.getCurrentUserId();
 
-  messageToSend: GroupMessage = {datetimeSent: new Date()};
+  messageToSend: GroupMessage = {datetimeSent: new Date(), message: ''};
   chatMessages: GroupMessage[] = [];
   showEmojiPicker = false;
+
+  allUsersList: User[] = [];
+  selectedUser: User | undefined;
 
   constructor(
     private messageService: MessageService,
@@ -31,39 +34,42 @@ export class ChatToComponent implements OnInit {
   ngOnInit(): void {
     this.messageService.currentComponent = this;
     this.chatService.currentComponent = this;
-    console.log(this.userId);
+    this.userService.getUserList().subscribe(users => {
+      this.allUsersList = users;
+      if (this.chatService.currentGroupId !== -1) {
+        this.refreshMessages();
+      }
+    });
   }
 
   refreshMessages(): void {
     console.log('refresh messages in component');
     this.chatService.getGroup(this.chatService.currentGroupId).subscribe(
     group => {
-      this.userService.getUserList().subscribe(users => {
-        const fullUsers: User[] = [];
-        users.forEach(user => {
-          this.userService.parseUserId(user);
-          group.users.forEach(chatUser => {
-            if (chatUser.user === this.userService.parseUserId(user)) {
-              fullUsers.push(user);
-            }
-          });
-        });
-        this.group = group;
-        if (!this.group.grpId) {
-          return;
-        }
-        // Find messages
-        this.messageService.getMessageInGroup(this.group.grpId).subscribe(
-          messages => {
-            messages.forEach(message => message.datetimeSent = new Date(message.datetimeSent));
-            messages.sort((a: GroupMessage, b: GroupMessage) => {
-              return a.datetimeSent.getTime() - b.datetimeSent.getTime();
-            });
-            this.chatMessages = messages;
+      const fullUsers: User[] = [];
+      this.allUsersList.forEach(user => {
+        this.userService.parseUserId(user);
+        group.users.forEach(chatUser => {
+          if (chatUser.user === this.userService.parseUserId(user)) {
+            fullUsers.push(user);
           }
-        );
-        this.group.fullUsers = fullUsers;
+        });
       });
+      this.group = group;
+      if (!this.group.grpId) {
+        return;
+      }
+      // Find messages
+      this.messageService.getMessageInGroup(this.group.grpId).subscribe(
+        messages => {
+          messages.forEach(message => message.datetimeSent = new Date(message.datetimeSent));
+          messages.sort((a: GroupMessage, b: GroupMessage) => {
+            return a.datetimeSent.getTime() - b.datetimeSent.getTime();
+          });
+          this.chatMessages = messages;
+        }
+      );
+      this.group.fullUsers = fullUsers;
     });
   }
 
@@ -80,17 +86,46 @@ export class ChatToComponent implements OnInit {
   }
 
   addEmoji(event: any): void {
-    console.log(this.messageToSend);
-    const { messageToSend } = this;
-    console.log(messageToSend);
-    console.log(`${event.emoji.native}`);
-    this.messageToSend.message = `${messageToSend}${event.emoji.native}`;
+    this.messageToSend.message += event.emoji.native;
     // this.showEmojiPicker = false;
   }
-  addMember(): void {
 
+  get isOwner(): boolean {
+    // console.log(this.userId, this.group.owner?.user, this.userId === this.group.owner?.user);
+    return this.userId === this.group.owner?.user;
+  }
+  get availableUsers(): User[] {
+    const res: User[] = [];
+    this.allUsersList.forEach(user => {
+      let found = false;
+      const userId = this.userService.parseUserId(user);
+      this.group.users.forEach(chatUser => {
+        if (chatUser.user === userId) {
+          found = true;
+        }
+      });
+      // Si l'utilisateur n'est pas dans le groupe (found) et si il n'est pas séléctionné (selectedUser)
+      if (!found) {
+        res.push(user);
+      }
+    });
+    return res;
+  }
+  addMember(): void {
+    if (!this.selectedUser) {
+      return;
+    }
+    this.chatService.addUserToGroup(this.userService.parseUserId(this.selectedUser)).subscribe(_ => {
+      this.selectedUser = undefined;
+      this.refreshMessages();
+    });
+  }
+  deleteMember(user: User): void {
+    this.chatService.removeUserFromGroup(this.userService.parseUserId(user)).subscribe(_ => {
+      this.refreshMessages();
+    });
   }
   getSenderName(senderId: string | undefined): string {
-    return this.group.fullUsers.find(user => this.userService.parseUserId(user) === senderId)?.name ?? ' ';
+    return this.allUsersList.find(user => this.userService.parseUserId(user) === senderId)?.name ?? ' ';
   }
 }

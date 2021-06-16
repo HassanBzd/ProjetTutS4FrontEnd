@@ -1,6 +1,6 @@
-export class GroupMessage {
+export interface GroupMessage {
   message?: string;
   groupId?: number;
   senderId?: string;
-  datetimeSent: Date = new Date();
+  datetimeSent: Date;
 }

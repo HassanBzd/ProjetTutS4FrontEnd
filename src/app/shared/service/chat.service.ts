@@ -6,6 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {User} from '@auth0/auth0-spa-js';
 import {UserService} from './user.service';
 import {Group} from '../model/group';
+import {AddRemoveUserToGroupDto} from "../model/addRemoveUserToGroupDto";
 
 @Injectable({
   providedIn: 'root'
@@ -36,5 +37,19 @@ export class ChatService {
   }
   getGroup(grpId: number): Observable<Group> {
     return this.httpClient.get<Group>(this.groupURL + 'getGroup/' + grpId);
+  }
+  removeUserFromGroup(userId: string): Observable<object> {
+    const body: AddRemoveUserToGroupDto = {
+      groupId: this.currentGroupId,
+      userId
+    };
+    return this.httpClient.post(this.groupURL + 'removeUser', body);
+  }
+  addUserToGroup(userId: string): Observable<object> {
+    const body: AddRemoveUserToGroupDto = {
+      groupId: this.currentGroupId,
+      userId
+    };
+    return this.httpClient.post(this.groupURL + 'addUser', body);
   }
 }
