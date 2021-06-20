@@ -1,4 +1,5 @@
-<div fxLayout>
-  <app-chat-list fxFlex="30%"></app-chat-list>
-  <app-chat-to fxFlex="70%"></app-chat-to>
+<div fxLayout id="mainContainer">
+  <app-chat-list fxFlex="30%" id="chatListComponent"></app-chat-list>
+  <app-chat-to fxFlex *ngIf="isChatting();else newChat"></app-chat-to>
+  <ng-template #newChat><app-chat-new fxFlex></app-chat-new></ng-template>
 </div>

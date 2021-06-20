@@ -13,26 +13,33 @@ import {MatListModule} from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
-import {FlexLayoutModule} from "@angular/flex-layout";
-
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {MatButtonModule} from '@angular/material/button';
+import { ChatNewComponent } from './chat-new/chat-new.component';
+import {MatOptionModule} from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
     ChatComponent,
     ChatToComponent,
-    ChatListComponent
+    ChatListComponent,
+    ChatNewComponent
   ],
-    imports: [
-        CommonModule,
-        PickerModule,
-        ChatRoutingModule,
-        MatFormFieldModule,
-        TextFieldModule,
-        MatInputModule,
-        FormsModule,
-        MatListModule,
-        MatIconModule,
-        FlexLayoutModule,
-    ]
+  imports: [
+    CommonModule,
+    PickerModule,
+    ChatRoutingModule,
+    MatFormFieldModule,
+    TextFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatListModule,
+    MatIconModule,
+    FlexLayoutModule,
+    MatButtonModule,
+    MatOptionModule,
+    MatSelectModule
+  ]
 })
 export class ChatModule { }

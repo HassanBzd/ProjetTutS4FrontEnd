@@ -1,4 +1,4 @@
-export class UpdateStatusDto {
-  userId?: string;
-  status?: string;
+export interface UpdateStatusDto {
+  userId: string;
+  status: string;
 }

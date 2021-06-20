@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from '../../shared/service/user.service';
 import {User} from '@auth0/auth0-spa-js';
 import {ChatService} from '../../shared/service/chat.service';
+import {Group} from '../../shared/model/group';
 
 @Component({
   selector: 'app-chat-list',
@@ -9,26 +10,34 @@ import {ChatService} from '../../shared/service/chat.service';
   styleUrls: ['./chat-list.component.scss']
 })
 export class ChatListComponent implements OnInit {
-
-  users: User[] = [];
-
-  constructor(private userService: UserService, private chatService: ChatService) { }
+  constructor(private userService: UserService, public chatService: ChatService) { }
 
   ngOnInit(): void {
-    this.userService.getUserList().subscribe(users => {
-      this.users = users.filter(user => this.userService.parseUserId(user) !== this.userService.getCurrentUserId());
+  }
+
+  changeCurrentUser(group: Group): void {
+    this.chatService.setCurrentGroupId(group.grpId);
+    this.chatService.isChatting = true;
+  }
+
+  isSelectedGroup(group: Group): boolean {
+    return this.chatService.currentGroupId === group.grpId;
+  }
+
+  newChat(): void {
+    this.chatService.isChatting = false;
+  }
+
+  getGroupName(group: Group): string {
+    let name = '';
+    this.userService.usersList.forEach(user => {
+      this.userService.parseUserId(user);
+      group.users.forEach(chatUser => {
+        if (chatUser.user === this.userService.parseUserId(user) && chatUser.user !== this.userService.getCurrentUserId()) {
+          name += user.name + '; ';
+        }
+      });
     });
-  }
-
-  changeCurrentUser(user: User): void {
-    this.chatService.setCurrentUserId(this.userService.parseUserId(user));
-  }
-
-  isSelectedUser(user: User): boolean {
-    return this.chatService.currentUserId === this.userService.parseUserId(user);
-  }
-  getUserStatus(user: User): string {
-    console.log(this.userService.getUserStatus(user));
-    return this.userService.getUserStatus(user);
+    return name.substring(0, name.length - 2); // On enlève le dernier '; '
   }
 }
