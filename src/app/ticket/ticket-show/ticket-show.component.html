@@ -1,5 +1,9 @@
-<div *ngIf="ticket">
-  <h1>{{ticket.title}}</h1>
-  <p>{{ticket.demand}}</p>
-</div>
-<button routerLink="/ticket/list" mat-raised-button color="accent">Retour</button>
+<mat-card *ngIf="ticket" id="card">
+  <mat-card-title>
+    {{ticket.title}}
+  </mat-card-title>
+  <mat-card-content>
+    <p id="demand">{{ticket.demand}}</p>
+    <button routerLink="/ticket/list" mat-raised-button color="accent">Retour</button>
+  </mat-card-content>
+</mat-card>
