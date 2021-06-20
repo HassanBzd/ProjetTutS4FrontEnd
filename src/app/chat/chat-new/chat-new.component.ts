@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {User} from '@auth0/auth0-spa-js';
 import {UserService} from '../../shared/service/user.service';
 import {ChatService} from '../../shared/service/chat.service';
+import {Group} from '../../shared/model/group';
 
 @Component({
   selector: 'app-chat-new',
@@ -17,9 +18,9 @@ export class ChatNewComponent implements OnInit {
   constructor(private userService: UserService, private chatService: ChatService) { }
 
   ngOnInit(): void {
-    this.userService.getUserList().subscribe(users => {
-      this.availableUsers = users.filter(user => this.userService.parseUserId(user) !== this.userService.getCurrentUserId());
-    });
+    this.availableUsers = this.userService.usersList.filter(user =>
+      this.userService.parseUserId(user) !== this.userService.getCurrentUserId()
+    );
   }
   addSelectedUser(): void {
     if (this.selectedUser) {
@@ -29,6 +30,10 @@ export class ChatNewComponent implements OnInit {
     }
   }
   create(): void {
-    this.chatService.createChat(this.selectedUsers).subscribe();
+    this.chatService.createChat(this.selectedUsers).subscribe(
+      (group: Group) => {
+        this.chatService.setCurrentGroupId(group.grpId);
+        this.chatService.isChatting = true;
+      } );
   }
 }

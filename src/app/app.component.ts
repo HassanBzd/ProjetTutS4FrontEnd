@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '@auth0/auth0-angular';
 import {UserService} from './shared/service/user.service';
 import {WebsocketService} from './shared/service/websocket.service';
+import {ChatService} from "./shared/service/chat.service";
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ export class AppComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private userService: UserService,
+    private chatService: ChatService,
     private websocketService: WebsocketService
   ) {
   }
@@ -29,11 +31,16 @@ export class AppComponent implements OnInit {
             this.websocketService.connect()
               .then(
                 () => {
-                  // Fetch users status
-                  this.userService.getAllUserStatus().subscribe(_ => {
-                    // Ready to use app
-                    this.loaded = true;
-                    console.log('connected');
+                  this.userService.getUserList().subscribe(_ => {
+                    // Fetch users status
+                    this.userService.getAllUserStatus().subscribe(_ => {
+                      // Fetch groups
+                      this.chatService.fetchGroupsWithUser().subscribe(_ => {
+                        // Ready to use app
+                        this.loaded = true;
+                        console.log('connected');
+                      });
+                    });
                   });
                 }
               ).catch(

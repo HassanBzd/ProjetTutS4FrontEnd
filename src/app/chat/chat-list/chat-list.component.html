@@ -1,7 +1,7 @@
 <mat-list id="list">
-  <mat-list-item *ngFor="let group of groups" (click)="changeCurrentUser(group)" [ngClass]="{'selected': isSelectedGroup(group)}">
+  <mat-list-item *ngFor="let group of chatService.groups" (click)="changeCurrentUser(group)" [ngClass]="{'selected': isSelectedGroup(group)}">
     <span class="userName">
-      {{group.grpId}}
+      {{getGroupName(group)}}
     </span>
     <mat-divider></mat-divider>
   </mat-list-item>

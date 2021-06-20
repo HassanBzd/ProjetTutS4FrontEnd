@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from '../../shared/service/message.service';
 import {GroupMessage} from '../../shared/model/groupMessage';
-import {Router} from '@angular/router';
 import {UserService} from '../../shared/service/user.service';
 import {ChatService} from '../../shared/service/chat.service';
 import {User} from '@auth0/auth0-spa-js';
@@ -20,13 +19,11 @@ export class ChatToComponent implements OnInit {
   chatMessages: GroupMessage[] = [];
   showEmojiPicker = false;
 
-  allUsersList: User[] = [];
   selectedUser: User | undefined;
 
   constructor(
     private messageService: MessageService,
     private userService: UserService,
-    private router: Router,
     private chatService: ChatService
   ) {
    }
@@ -34,12 +31,9 @@ export class ChatToComponent implements OnInit {
   ngOnInit(): void {
     this.messageService.currentComponent = this;
     this.chatService.currentComponent = this;
-    this.userService.getUserList().subscribe(users => {
-      this.allUsersList = users;
-      if (this.chatService.currentGroupId !== -1) {
-        this.refreshMessages();
-      }
-    });
+    if (this.chatService.currentGroupId !== -1) {
+      this.refreshMessages();
+    }
   }
 
   refreshMessages(): void {
@@ -47,7 +41,7 @@ export class ChatToComponent implements OnInit {
     this.chatService.getGroup(this.chatService.currentGroupId).subscribe(
     group => {
       const fullUsers: User[] = [];
-      this.allUsersList.forEach(user => {
+      this.userService.usersList.forEach(user => {
         this.userService.parseUserId(user);
         group.users.forEach(chatUser => {
           if (chatUser.user === this.userService.parseUserId(user)) {
@@ -96,7 +90,7 @@ export class ChatToComponent implements OnInit {
   }
   get availableUsers(): User[] {
     const res: User[] = [];
-    this.allUsersList.forEach(user => {
+    this.userService.usersList.forEach(user => {
       let found = false;
       const userId = this.userService.parseUserId(user);
       this.group.users.forEach(chatUser => {
@@ -126,6 +120,9 @@ export class ChatToComponent implements OnInit {
     });
   }
   getSenderName(senderId: string | undefined): string {
-    return this.allUsersList.find(user => this.userService.parseUserId(user) === senderId)?.name ?? ' ';
+    return this.userService.usersList.find(user => this.userService.parseUserId(user) === senderId)?.name ?? ' ';
+  }
+  getUserStatus(user: User): string {
+    return this.userService.getUserStatus(user);
   }
 }

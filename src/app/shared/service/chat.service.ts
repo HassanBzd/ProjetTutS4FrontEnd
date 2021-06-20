@@ -6,7 +6,8 @@ import {HttpClient} from '@angular/common/http';
 import {User} from '@auth0/auth0-spa-js';
 import {UserService} from './user.service';
 import {Group} from '../model/group';
-import {AddRemoveUserToGroupDto} from "../model/addRemoveUserToGroupDto";
+import {AddRemoveUserToGroupDto} from '../model/addRemoveUserToGroupDto';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,23 +19,27 @@ export class ChatService {
   currentComponent: ChatToComponent | undefined;
   isChatting = true;
 
+  groups: Group[] = [];
+
   constructor(private httpClient: HttpClient, private userService: UserService) { }
 
   setCurrentGroupId(grpId: number | undefined): void {
     this.currentGroupId = grpId ?? -1;
-    console.log(this.currentComponent);
     this.currentComponent?.refreshMessages();
   }
 
-  createChat(users: User[]): Observable<object> {
+  createChat(users: User[]): Observable<Group> {
     const userList: string[] = [];
     users.forEach(user => userList.push(this.userService.parseUserId(user)));
-    return this.httpClient.post(this.groupURL + 'create', userList);
+    return this.httpClient.post<Group>(this.groupURL + 'create', userList);
   }
 
-  getGroupsWithUser(): Observable<Group[]> {
-    return this.httpClient.get<Group[]>(this.groupURL + 'getGroupsWithUser/' + this.userService.getCurrentUserId());
+  fetchGroupsWithUser(): Observable<Group[]> {
+    return this.httpClient.get<Group[]>(this.groupURL + 'getGroupsWithUser/' + this.userService.getCurrentUserId())
+      .pipe(map((groups: Group[]) => this.groups = groups));
   }
+
+
   getGroup(grpId: number): Observable<Group> {
     return this.httpClient.get<Group>(this.groupURL + 'getGroup/' + grpId);
   }

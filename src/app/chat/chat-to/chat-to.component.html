@@ -3,9 +3,12 @@
     <div class="chat__content">
       <div class="chat__header">
         <div fxFlex id="fullusernameList">
-          <span *ngFor="let user of group.fullUsers" class="span__username">{{user.name}}
+          <span *ngFor="let user of group.fullUsers" class="span__username">
+            {{user.name}}
+            <span class="status" [ngClass]=getUserStatus(user)></span>
             <button mat-icon-button class="deleteIcons" *ngIf="isOwner" (click)="deleteMember(user)"><mat-icon>delete</mat-icon></button>
-            ; </span>
+            ;
+          </span>
         </div>
         <!-- Partie pour le owner seulement -->
         <div fxFlex="25%" *ngIf="isOwner" fxLayout fxLayoutAlign="space-evenly center">

@@ -22,7 +22,7 @@ export class TicketService {
   }
 
   getTickets(): Observable<Ticket[]> {
-    return this.httpClient.get<Ticket[]>(this.ticketURL + 'getTickets');
+    return this.httpClient.get<Ticket[]>(this.ticketURL + 'getTicketsForUser');
   }
 
   getOneTicket(ticketId: number): Observable<Ticket> {

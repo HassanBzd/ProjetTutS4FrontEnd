@@ -18,6 +18,8 @@ export class UserService {
   private currentUser: User | null | undefined;
   private userStatus: any = {};
 
+  usersList: User[] = [];
+
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -38,7 +40,7 @@ export class UserService {
     return this.authService.user$.pipe(map((user: User | null | undefined) => this.currentUser = user));
   }
   getUserList(): Observable<User[]> {
-    return this.httpClient.get<User[]>(this.userApiURL + '/users', this.httpOptions);
+    return this.httpClient.get<User[]>(this.userApiURL + '/users', this.httpOptions).pipe(map((users: User[]) => this.usersList = users));
   }
 
   parseUserId(user: User): string {

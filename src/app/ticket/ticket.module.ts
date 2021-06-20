@@ -11,6 +11,8 @@ import {FormsModule} from '@angular/forms';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatListModule} from '@angular/material/list';
 import { TicketShowComponent } from './ticket-show/ticket-show.component';
+import {MatCardModule} from "@angular/material/card";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { TicketShowComponent } from './ticket-show/ticket-show.component';
     MatInputModule,
     MatTabsModule,
     FormsModule,
-    MatListModule
+    MatListModule,
+    MatCardModule,
+    FlexLayoutModule
   ]
 })
 export class TicketModule { }
