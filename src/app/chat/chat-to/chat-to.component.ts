@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from '../../shared/service/message.service';
 import {GroupMessage} from '../../shared/model/groupMessage';
-import {Router} from '@angular/router';
 import {UserService} from '../../shared/service/user.service';
 import {ChatService} from '../../shared/service/chat.service';
 import {User} from '@auth0/auth0-spa-js';
@@ -25,7 +24,6 @@ export class ChatToComponent implements OnInit {
   constructor(
     private messageService: MessageService,
     private userService: UserService,
-    private router: Router,
     private chatService: ChatService
   ) {
    }

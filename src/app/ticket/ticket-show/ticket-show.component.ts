@@ -24,7 +24,7 @@ export class TicketShowComponent implements OnInit {
       this.router.navigate(['/ticket/list']);
     }
     else {
-      this.ticketService.getOneTicket(Number(ticketId)).subscribe(ticket => this.ticket = ticket);
+      this.ticketService.getOneTicket(Number(ticketId)).subscribe(ticket => {this.ticket = ticket; console.log(ticket); });
     }
   }
 
