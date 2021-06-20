@@ -127,3 +127,23 @@
   font-size: 1.3em;
   margin-left: 10px;
 }
+.connected {
+  background-color: #0FA;
+}
+
+.busy {
+  background-color: #FB0;
+}
+
+.disconnected {
+  background-color: red;
+}
+
+.status{
+  border: 1px solid black;
+  display: inline-block;
+  min-width: 10px;
+  min-height: 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+}

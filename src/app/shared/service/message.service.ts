@@ -25,7 +25,7 @@ export class MessageService {
   }
   // Update messages
   updateWithUserMessage(): void {
-    console.log('refresh messages in service', this.currentComponent);
+    // console.log('refresh messages in service', this.currentComponent);
     this.currentComponent?.refreshMessages();
   }
 }
